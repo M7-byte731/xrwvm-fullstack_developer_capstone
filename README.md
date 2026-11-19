@@ -1,3 +1,6 @@
+Repository Name: xrwvm-fullstack_developer_capstone
+Project Name: Cars Dealerships — IBM Full Stack Capstone
+
 # Cars Dealerships — IBM Full Stack Capstone
 
 A full stack dealership directory and customer review application built from the [IBM Skills Network capstone template](https://github.com/ibm-developer-skills-network/xrwvm-fullstack_developer_capstone).
