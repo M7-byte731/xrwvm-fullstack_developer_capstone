@@ -1,6 +1,10 @@
 from flask import Flask
 from nltk.sentiment import SentimentIntensityAnalyzer
+import os
 import json
+import nltk
+
+nltk.data.path.append(os.path.join(os.path.dirname(__file__), 'sentiment', 'vader_lexicon.zip'))
 app = Flask("Sentiment Analyzer")
 
 sia = SentimentIntensityAnalyzer()

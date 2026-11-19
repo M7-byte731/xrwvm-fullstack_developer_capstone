@@ -13,13 +13,11 @@ const PostReview = () => {
   const [date, setDate] = useState("");
   const [carmodels, setCarmodels] = useState([]);
 
-  let curr_url = window.location.href;
-  let root_url = curr_url.substring(0,curr_url.indexOf("postreview"));
   let params = useParams();
   let id =params.id;
-  let dealer_url = root_url+`djangoapp/dealer/${id}`;
-  let review_url = root_url+`djangoapp/add_review`;
-  let carmodels_url = root_url+`djangoapp/get_cars`;
+  let dealer_url = `/djangoapp/dealer/${id}`;
+  let review_url = `/djangoapp/add_review`;
+  let carmodels_url = `/djangoapp/get_cars`;
 
   const postreview = async ()=>{
     let name = sessionStorage.getItem("firstname")+" "+sessionStorage.getItem("lastname");
@@ -69,7 +67,7 @@ const PostReview = () => {
     const retobj = await res.json();
     
     if(retobj.status === 200) {
-      let dealerobjs = Array.from(retobj.dealer)
+      let dealerobjs = Array.isArray(retobj.dealer) ? retobj.dealer : [retobj.dealer]
       if(dealerobjs.length > 0)
         setDealer(dealerobjs[0])
     }
@@ -81,9 +79,11 @@ const PostReview = () => {
     });
     const retobj = await res.json();
     
-    let carmodelsarr = Array.from(retobj.CarModels)
+    let carmodelsarr = Array.from(retobj.CarModels || [])
     setCarmodels(carmodelsarr)
   }
+  // Load page data once when the review form opens.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     get_dealer();
     get_cars();
@@ -102,7 +102,7 @@ const PostReview = () => {
       <div className='input_field'>
       Car Make 
       <select name="cars" id="cars" onChange={(e) => setModel(e.target.value)}>
-      <option value="" selected disabled hidden>Choose Car Make and Model</option>
+      <option value="" disabled hidden>Choose Car Make and Model</option>
       {carmodels.map(carmodel => (
           <option value={carmodel.CarMake+" "+carmodel.CarModel}>{carmodel.CarMake} {carmodel.CarModel}</option>
       ))}
@@ -110,7 +110,7 @@ const PostReview = () => {
       </div >
 
       <div className='input_field'>
-      Car Year <input type="int" onChange={(e) => setYear(e.target.value)} max={2023} min={2015}/>
+      Car Year <input type="number" onChange={(e) => setYear(e.target.value)} max={2026} min={2015}/>
       </div>
 
       <div>
