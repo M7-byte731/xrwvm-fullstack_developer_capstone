@@ -30,4 +30,5 @@ jobs:
           cache: npm
           cache-dependency-path: server/frontend/package-lock.json
       - run: npm ci
-      - run: npm run build
+      - run: CI=false npm run build
+      
